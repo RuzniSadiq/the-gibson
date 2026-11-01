@@ -302,7 +302,7 @@ check_push() {
   branch="$(branch_from_push_args "$@")"
   [[ -n "$branch" && "$branch" != -* && "$branch" != */*:* ]] ||
     fail "could not determine pushed branch for remote '$remote'"
-  "$REAL_GIT" "$@" || return $?
+  "$REAL_GIT" push "$@" || return $?
   remote_tip=$("$REAL_GIT" ls-remote "$remote" "refs/heads/$branch" | awk 'NR == 1 { print $1 }')
   local_tip=$("$REAL_GIT" rev-parse "$branch" 2>/dev/null || "$REAL_GIT" rev-parse HEAD)
   [[ -n "$remote_tip" && "$remote_tip" == "$local_tip" ]] ||

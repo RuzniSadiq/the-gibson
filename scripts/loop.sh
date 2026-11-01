@@ -2017,11 +2017,11 @@ invoke_runner() {
       command -v claude >/dev/null || die "claude CLI not found"
       # stdin, for the same frontmatter reason as grok's --prompt-file above:
       # as a positional arg the leading "---" is parsed as an unknown option
-      run_with_wall_timeout "$RUNNER_TIMEOUT" bash -c 'cd "$1" && exec claude -p --output-format text --permission-mode acceptEdits' _ "$REPO" < "$prompt_file"
+      run_with_wall_timeout "$RUNNER_TIMEOUT" bash -c 'cd "$1" && exec claude -p --output-format text --permission-mode bypassPermissions' _ "$REPO" < "$prompt_file"
       ;;
     codex)
       command -v codex >/dev/null || die "codex CLI not found"
-      run_with_wall_timeout "$RUNNER_TIMEOUT" codex exec --full-auto --cd "$REPO" - < "$prompt_file"
+      run_with_wall_timeout "$RUNNER_TIMEOUT" codex exec --sandbox workspace-write --cd "$REPO" - < "$prompt_file"
       ;;
     hermes)
       if [[ -n "${HERMES_CMD:-}" ]]; then
