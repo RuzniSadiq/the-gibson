@@ -2021,7 +2021,7 @@ invoke_runner() {
       ;;
     codex)
       command -v codex >/dev/null || die "codex CLI not found"
-      run_with_wall_timeout "$RUNNER_TIMEOUT" codex exec --full-auto --cd "$REPO" - < "$prompt_file"
+      run_with_wall_timeout "$RUNNER_TIMEOUT" codex exec --sandbox workspace-write -c sandbox_workspace_write.network_access=true --add-dir "$(dirname "$REPO")" --cd "$REPO" - < "$prompt_file"
       ;;
     hermes)
       if [[ -n "${HERMES_CMD:-}" ]]; then
